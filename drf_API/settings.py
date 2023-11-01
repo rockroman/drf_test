@@ -67,7 +67,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = "DEV" in os.environ
 # DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "dj-rest-test-f6d48f5f2d48.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", os.environ.get("ALLOWED_HOST")]
 
 
 # Application definition
