@@ -109,10 +109,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if "CLIENT_ORIGIN" in os.environ:
-    CORS_ALLOWED_ORIGINS = [os.environ.get("CLIENT_ORIGIN")]
-else:
-    CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+# if "CLIENT_ORIGIN" in os.environ:
+#     CORS_ALLOWED_ORIGINS = [os.environ.get("CLIENT_ORIGIN")]
+# else:
+#     CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Your local development URL
+    "https://rr-moments-3652128f860f.herokuapp.com",  # Your deployed React app URL
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
