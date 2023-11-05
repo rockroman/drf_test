@@ -64,8 +64,8 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "DEV" in os.environ
-# DEBUG = False
+# DEBUG = "DEV" in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", os.environ.get("ALLOWED_HOST")]
 
@@ -109,6 +109,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 # if "CLIENT_ORIGIN" in os.environ:
 #     CORS_ALLOWED_ORIGINS = [os.environ.get("CLIENT_ORIGIN")]
 # else:
@@ -118,7 +120,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://rr-moments-3652128f860f.herokuapp.com",  # Your deployed React app URL
 ]
 
-CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "drf_API.urls"
 SITE_ID = 1
@@ -152,16 +153,15 @@ WSGI_APPLICATION = "drf_API.wsgi.application"
 #     }
 # }
 
-# if "DEV" in os.environ:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
-# else:
-#
-DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
+if "DEV" in os.environ:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
 
 
 # Password validation
