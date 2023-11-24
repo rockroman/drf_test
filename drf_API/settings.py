@@ -64,8 +64,8 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "DEV" in os.environ
-# DEBUG = True
+# DEBUG = "DEV" in os.environ
+DEBUG = "DEBUG" in os.environ
 
 ALLOWED_HOSTS = ["127.0.0.1", os.environ.get("ALLOWED_HOST")]
 
@@ -78,8 +78,8 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
     "cloudinary",
     "rest_framework",
     "django_filters",
@@ -101,6 +101,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -111,14 +112,11 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-# if "CLIENT_ORIGIN" in os.environ:
-#     CORS_ALLOWED_ORIGINS = [os.environ.get("CLIENT_ORIGIN")]
-# else:
-#     CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Your local development URL
-    "https://rr-moments-3652128f860f.herokuapp.com",  # Your deployed React app URL
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # Your local development URL
+#     "https://rr-moments-3652128f860f.herokuapp.com",  # Your deployed React app URL
+# ]
+CORS_ALLOWED_ORIGINS = [os.environ.get("CLIENT_ORIGIN")]
 
 
 ROOT_URLCONF = "drf_API.urls"
@@ -127,7 +125,7 @@ SITE_ID = 1
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "staticfiles", "build")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -203,7 +201,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = []
-STATIC_ROOT = ""
+STATIC_ROOT = BASE_DIR / "staticfiles"
+WHITENOISE_ROOT = BASE_DIR / "staticfiles" / "build"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
